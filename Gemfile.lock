@@ -1,0 +1,13 @@
+GEM
+  remote: http://rubygems.org/
+  remote: http://gems.minus5.hr/
+  specs:
+    hashie (1.0.0)
+    tiny_tds (0.5.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  hashie (= 1.0.0)
+  tiny_tds (= 0.5.0)
