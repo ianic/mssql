@@ -7,10 +7,14 @@ class TestTable < Test::Unit::TestCase
   end                      
   
   def test_one_table
-    to = TableOutput.new([:id, :pero, :zdero], [{:id =>1, :pero=>'abc', :zdero=>123}, {:id=>10, :pero=>'defg', :zdero=>'nesto'}])
-    output = "|  id| pero|zdero|
-| abc|  123|    1|
-|defg|nesto|   10|"
+    to = TableOutput.new([:id, :pero, :zdero], [[1, 'abc', 123], [10, 'defg', 'nesto']])
+    output = "+--+----+-----+
+|id|pero|zdero|
++--+----+-----+
+| 1| abc|  123|
+|10|defg|nesto|
++--+----+-----+
+"
     assert_equal output, to.to_s
   end
 
