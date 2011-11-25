@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
-$: << File.join(File.dirname(__FILE__), "..")
+require 'pathname'
+$: << File.join(File.dirname(Pathname.new(__FILE__).realpath), "..")
 require 'lib/mssql'
-require 'pp'
 
 params = ParamsParser.new
-exec = QueryExec.new params.options
-exec.stdin_loop
+controller = Controller.new params.options
+controller.run

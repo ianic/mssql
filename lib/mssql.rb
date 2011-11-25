@@ -10,3 +10,5 @@ $: << File.join(File.dirname(__FILE__))
 require 'params_parser'
 require 'query_exec'
 require 'table_output'
+require 'command'
+require 'controller'

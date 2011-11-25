@@ -22,13 +22,13 @@ class TableOutput
     end
   end
 
-
   def to_s
-    format = @sizes.map{|s| "%#{s}s"}.join("|")
+    format = @sizes.map{|s| "%-#{s}s"}.join("|")
     output = []
 
     separator = @sizes.map{|s| "-" * s}.join("+")
     separator = "+#{separator}+"
+    output << ""
     output << separator
     output << "|#{format}|" % @cols
     output << separator
@@ -36,7 +36,8 @@ class TableOutput
       output << "|#{format}|" % row
     end
     output << separator
-    output.join("\n") + "\n"
+    output << ""
+    output.join("\n")
   end
 
 end
