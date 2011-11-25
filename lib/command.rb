@@ -92,29 +92,30 @@ EOS
 
   def explain_object(schema, object)
     sql = <<-EOS
-declare @object_id int, @type varchar(2)
-select @object_id = o.object_id, @type = o.type
+declare @object_id int, @type varchar(2), @name varchar(255)
+
+select @object_id = o.object_id, @type = o.type, @name = s.name + '.' + o.name
 from sys.objects o
 inner join sys.schemas s on o.schema_id = s.schema_id
 where s.name = '#{schema}' and o.name = '#{object}'
-order by s.name, o.name
---select @object_id, @type
-if @type = 'U'
-  exec sp_help '#{schema}.#{object}'
+
+--finding object with like in name, possibly confusing, so comment out
+--if @object_id is null
+--  select top 1 @object_id = o.object_id, @type = o.type, @name = s.name + '.' + o.name
+--  from sys.objects o
+--  inner join sys.schemas s on o.schema_id = s.schema_id
+--  where s.name = '#{schema}' and o.name like '#{object}%'
+--  order by s.schema_id, o.name
+  
+if @object_id is not null
+  if @type = 'U'
+    exec sp_help @name
+  else
+    select text from syscomments where id = @object_id
 else
-  select text from syscomments where id = @object_id
+    select 'object not found'
 EOS
 
-
-#     sql = <<-EOS
-# declare @object_id int
-# select @object_id = o.object_id
-# from sys.objects o
-# inner join sys.schemas s on o.schema_id = s.schema_id
-# where s.name = '#{schema}' and o.name = '#{object}'
-# order by s.name, o.name
-# select text from syscomments where id = @object_id
-# EOS
     @connection.show_text_or_table(sql)
     @processed = true
   end

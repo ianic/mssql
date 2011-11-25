@@ -8,7 +8,7 @@ require 'hashie'
 $: << File.join(File.dirname(__FILE__))
 
 require 'params_parser'
-require 'query_exec'
+require 'connection'
 require 'table_output'
 require 'command'
 require 'controller'

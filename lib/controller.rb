@@ -3,7 +3,7 @@ require 'readline'
 class Controller
   
   def initialize(options)
-    @connection = QueryExec.new options
+    @connection = Connection.new options
     @prompt = "#{options.username}@#{options.host}> "
   end
 

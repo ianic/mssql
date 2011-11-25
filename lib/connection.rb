@@ -1,4 +1,4 @@
-class QueryExec
+class Connection
   
   def initialize(options)
     @client = TinyTds::Client.new(
