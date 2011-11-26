@@ -75,7 +75,7 @@ class Command
     		end,		
     		s.name, o.name
 EOS
-    @connection.show(sql)
+    QueryOutput.show(@connection, sql)
     @processed = true
   end
 
@@ -86,7 +86,7 @@ EOS
       inner join sys.schemas on schemas.schema_id = tables.schema_id
       order by 1
 EOS
-    @connection.show sql
+    QueryOutput.show(@connection, sql)
     @processed = true
   end
 
@@ -116,7 +116,7 @@ else
     select 'object not found'
 EOS
 
-    @connection.show_text_or_table(sql)
+    QueryOutput.show_text_or_table(@connection, sql)
     @processed = true
   end
 
