@@ -22,7 +22,7 @@ class TestConnection < Test::Unit::TestCase
                         :zip,
                         :contract]
 
-    options = Hashie::Mash.new(:username => 'sa', :password => 'dsalkjmn', :host => 'iow', :database => "pubs")
+    options = Hashie::Mash.new({:default_connection => { :username => 'sa', :password => 'dsalkjmn', :host => 'iow', :database => "pubs"}})
     @query_exec = Connection.new(options)
   end                      
   

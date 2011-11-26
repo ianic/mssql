@@ -1,15 +1,12 @@
 class Connection
   
-  def initialize(options)
-    @client = TinyTds::Client.new(
-                                  :username => options.username,
-                                  :password => options.password,
-                                  :host => options.host,
-                                  :database => options.database
-                                  )
+  def initialize(configs)
+    @configs = configs
+    @current_config = @configs.default_connection
+    connect
   end
   
-  attr_reader :results, :error
+  attr_reader :results, :error, :name
 
   def error?
     !@error.nil?
@@ -38,6 +35,18 @@ class Connection
       @result = nil
       @error = Hashie::Mash.new(:error => e.to_s, :severity => e.severity, :db_error_number => e.db_error_number)
     end
+  end
+
+  private
+  
+  def connect
+    @client = TinyTds::Client.new(
+                                  :username => @current_config.username,
+                                  :password => @current_config.password,
+                                  :host =>     @current_config.host,
+                                  :database => @current_config.database
+                                  )
+    @name = "#{@current_config.username}@#{@current_config.host}"   
   end
   
 end

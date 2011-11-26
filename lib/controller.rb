@@ -2,9 +2,10 @@ require 'readline'
 
 class Controller
   
-  def initialize(options)
-    @connection = Connection.new options
-    @prompt = "#{options.username}@#{options.host}> "
+  def initialize
+    read_configs
+    @connection = Connection.new @configs
+    @prompt = "#{@connection.name}> "
     trap_int
   end
 
@@ -43,6 +44,19 @@ class Controller
 
   def show(query)
     QueryOutput.new(@connection, query).show
+  end
+
+  def read_configs
+    file_configs = YAML.load_file "#{ENV['HOME']}/.mssql" rescue {}
+    @configs = Hashie::Mash.new(file_configs)
+    params = ParamsParser.new
+    unless params.options.empty?
+      @configs.default_connection = params
+    end
+    unless @configs.default_connection
+      params.print_usage
+      exit
+    end
   end
   
 end

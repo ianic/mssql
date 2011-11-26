@@ -5,13 +5,13 @@ class QueryOutput
     @query = query
   end
 
-  def show(sql)
-    exec sql
+  def show
+    exec 
     @connection.error? ? print_error : print_tables
   end
 
-  def show_text_or_table(sql)
-    exec sql
+  def show_text_or_table
+    exec 
     if @connection.one_column_one_row?
       print_text
     else
@@ -34,7 +34,7 @@ class QueryOutput
   end
   
   def print_tables
-    result = @connection.results
+    results = @connection.results
     if results.columns.first.kind_of?(Array)
       (0..results.columns.size-1).each do |index|
         print TableOutput.new(results.columns[index], results.rows[index]).to_s
@@ -45,7 +45,7 @@ class QueryOutput
   end
 
   def exec
-    @connection.exec
+    @connection.exec @query
   end
 
 end
