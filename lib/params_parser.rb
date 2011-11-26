@@ -40,5 +40,11 @@ class ParamsParser
 END
   end
 
+  def missing_key(keys)
+    keys.find do |key|
+      !@options.has_key?(key.to_s)      
+    end
+  end
+
   attr_reader :options
 end

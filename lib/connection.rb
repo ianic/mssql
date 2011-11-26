@@ -2,8 +2,7 @@ class Connection
   
   def initialize(configs)
     @configs = configs
-    @current_config = @configs.default_connection
-    connect
+    use :default_connection
   end
   
   attr_reader :results, :error, :name
@@ -37,16 +36,20 @@ class Connection
     end
   end
 
+  KEYS = [:username, :password, :host, :database] 
+
+  def use(name = :default_connection)
+    return unless @configs.has_key?(name.to_s)
+    connect @configs[name.to_s]
+  end
+
   private
   
-  def connect
-    @client = TinyTds::Client.new(
-                                  :username => @current_config.username,
-                                  :password => @current_config.password,
-                                  :host =>     @current_config.host,
-                                  :database => @current_config.database
-                                  )
-    @name = "#{@current_config.username}@#{@current_config.host}"   
+  def connect(config)
+    new_client = TinyTds::Client.new(config.to_hash.symbolize_keys)
+    @client.close if @client
+    @client = new_client
+    @name = "#{config.username}@#{config.host}"   
   end
   
 end

@@ -2,12 +2,16 @@ GEM
   remote: http://rubygems.org/
   remote: http://gems.minus5.hr/
   specs:
+    activesupport (3.1.1)
+      multi_json (~> 1.0)
     hashie (1.0.0)
+    multi_json (1.0.3)
     tiny_tds (0.5.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport (= 3.1.1)
   hashie (= 1.0.0)
   tiny_tds (= 0.5.0)

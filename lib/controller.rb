@@ -3,8 +3,7 @@ require 'readline'
 class Controller
   
   def initialize
-    read_configs
-    @connection = Connection.new @configs
+    connect
     @prompt = "#{@connection.name}> "
     trap_int
   end
@@ -35,9 +34,9 @@ class Controller
   private
 
   def trap_int
-    stty_save = `stty -g`.chomp
+    #stty_save = `stty -g`.chomp
     trap('INT') do
-      system('stty', stty_save); 
+      #system('stty', stty_save); 
       exit       
     end
   end
@@ -46,12 +45,24 @@ class Controller
     QueryOutput.new(@connection, query).show
   end
 
+  def connect
+    read_configs
+    @connection = Connection.new @configs
+  rescue TinyTds::Error => e
+    print "#{e.to_s}\n"
+    exit
+  end
+
   def read_configs
     file_configs = YAML.load_file "#{ENV['HOME']}/.mssql" rescue {}
     @configs = Hashie::Mash.new(file_configs)
     params = ParamsParser.new
-    unless params.options.empty?
-      @configs.default_connection = params
+    unless params.options.empty?      
+      if missing = params.missing_key(Connection::KEYS)
+        print "missing #{missing} param\n"
+        exit
+      end
+      @configs.default_connection = params.options 
     end
     unless @configs.default_connection
       params.print_usage
