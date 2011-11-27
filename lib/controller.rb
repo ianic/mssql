@@ -4,7 +4,7 @@ class Controller
   
   def initialize
     connect
-    @prompt = "#{@connection.name}> "
+    # @prompt = "#{@connection.name}> "
     trap_int
   end
 
@@ -47,7 +47,7 @@ class Controller
 
   def connect
     read_configs
-    @connection = Connection.new @configs
+    @connection = Connection.new @configs, Proc.new{ |name| @prompt = "#{name}> " }
   rescue TinyTds::Error => e
     print "#{e.to_s}\n"
     exit

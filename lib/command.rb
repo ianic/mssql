@@ -14,35 +14,40 @@ class Command
   end
 
   def exit?
-    @command == "exit"
+    @command == ".exit" || @command == ".quit"
   end
   
   def processed?
     @processed
   end
 
-  def parse
-    if @command.start_with?("find")
-      match = @command.match /find\s*(\w*)\s*([\w.]*)/
+  def parse    
+    cp = CommandParser.new(@command)
+    @processed = cp.is_command?
+    return unless cp.is_command?
+    case cp.command
+      when :find
       types = nil
-      types = "'U'" if match[1].start_with?("table")
-      types = "'V'" if match[1].start_with?("view")
-      types = "'P'" if match[1].start_with?("procedure")
-      types = "'TF', 'IF', 'FN'" if match[1].start_with?("function")
-      find(types, types.nil? ? match[1].to_s + match[2].to_s : match[2])  
-    end
-    if @command.start_with?("explain")
-      match = @command.match /explain\s+(\w*)\.*(\w*)/
-      if match[2].nil? || match[2].empty?
+      p = cp.params[0]
+      if p
+        types = "'U'" if p.start_with?("table")
+        types = "'V'" if p.start_with?("view")
+        types = "'P'" if p.start_with?("procedure")
+        types = "'TF', 'IF', 'FN'" if p.start_with?("function")
+      end
+      find(types, types.nil? ? cp.params[0].to_s + cp.params[1].to_s : cp.params[1])  
+      when :explain
+      if cp.params[1].nil? || cp.params[1].empty?
         schema = 'dbo'
-        object = match[1]
+        object = cp.params[0]
       else
-        schema = match[1]
-        object = match[2]
+        schema = cp.params[0]
+        object = cp.params[1]
       end
       explain_object schema, object
+      when :use
+      @connection.use cp.params[0]
     end
-    show_tables if @command.start_with?("show tables")
   end
 
   def find(types, name)
@@ -75,7 +80,7 @@ class Command
     		end,		
     		s.name, o.name
 EOS
-    QueryOutput.show(@connection, sql)
+    QueryOutput.new(@connection, sql).show
     @processed = true
   end
 
@@ -86,7 +91,7 @@ EOS
       inner join sys.schemas on schemas.schema_id = tables.schema_id
       order by 1
 EOS
-    QueryOutput.show(@connection, sql)
+    QueryOutput.new(@connection, sql).show
     @processed = true
   end
 
@@ -116,7 +121,7 @@ else
     select 'object not found'
 EOS
 
-    QueryOutput.show_text_or_table(@connection, sql)
+    QueryOutput.new(@connection, sql).show_text_or_table
     @processed = true
   end
 

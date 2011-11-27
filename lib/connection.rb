@@ -1,7 +1,8 @@
 class Connection
   
-  def initialize(configs)
+  def initialize(configs, after_connect_handler=nil)
     @configs = configs
+    @after_connect_handler = after_connect_handler
     use :default_connection
   end
   
@@ -39,8 +40,9 @@ class Connection
   KEYS = [:username, :password, :host, :database] 
 
   def use(name = :default_connection)
-    return unless @configs.has_key?(name.to_s)
+    return false unless @configs.has_key?(name.to_s)
     connect @configs[name.to_s]
+    return true
   end
 
   private
@@ -49,7 +51,8 @@ class Connection
     new_client = TinyTds::Client.new(config.to_hash.symbolize_keys)
     @client.close if @client
     @client = new_client
-    @name = "#{config.username}@#{config.host}"   
+    @name = config.name || "#{config.username}@#{config.host}"   
+    @after_connect_handler.call(@name) if @after_connect_handler 
   end
   
 end

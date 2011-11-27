@@ -28,12 +28,14 @@ class TestConnection < Test::Unit::TestCase
       :host => 'iow', 
       :database => "pubs"}
     conn2 = { 
+      :name => 'conn2_name',
       :username => 'ianic2', 
       :password => 'ianic2', 
       :host => 'iow', 
       :database => "pubs"}
     options = Hashie::Mash.new({:default_connection => conn1, :conn1 => conn1, :conn2 => conn2})
-    @connection = Connection.new(options)
+    @name = ''
+    @connection = Connection.new options, Proc.new {|name| @name = name}
   end                      
   
   def test_simple_select
@@ -72,7 +74,6 @@ class TestConnection < Test::Unit::TestCase
     assert_equal 43, result.affected
   end
 
-
   def test_error
     result = @connection.exec "select * from pero"
     assert_equal "Invalid object name 'pero'.", result.error
@@ -86,12 +87,17 @@ class TestConnection < Test::Unit::TestCase
   def test_change_connection
     assert @connection.use :conn2
     assert_equal 23, @connection.exec("select * from authors").rows.size
-    assert_equal "ianic2@iow", @connection.name
     assert @connection.use :conn1
     assert_equal 23, @connection.exec("select * from authors").rows.size
     assert_equal "ianic@iow", @connection.name
     
     assert !@connection.use(:unknown)
+  end
+
+  def test_connection_name
+    assert_equal 'ianic@iow', @name
+    assert @connection.use :conn2
+    assert_equal 'conn2_name', @name
   end
 
 end
