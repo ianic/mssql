@@ -58,15 +58,25 @@ class Controller
     @configs = Hashie::Mash.new(file_configs)
     params = ParamsParser.new
     unless params.options.empty?      
-      if missing = params.missing_key(Connection::KEYS)
-        print "missing #{missing} param\n"
-        exit
+      if params.options.connection
+        key = params.options.connection.to_s
+        if @configs.has_key?(key)
+          @configs.default_connection = @configs[key]
+        else
+          print "unkonwn connection #{key}\n"
+          exit 1
+        end
+      else
+        if missing = params.missing_key(Connection::KEYS)
+          print "missing #{missing} param\n"
+          exit 2
+        end
+        @configs.default_connection = params.options 
       end
-      @configs.default_connection = params.options 
     end
     unless @configs.default_connection
       params.print_usage
-      exit
+      exit 3
     end
   end
   

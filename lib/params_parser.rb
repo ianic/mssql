@@ -1,6 +1,6 @@
 class ParamsParser
 
-  def initialize
+  def initialize    
     @options = Hashie::Mash.new
     parse
   end
@@ -9,19 +9,16 @@ class ParamsParser
     @opts = OptionParser.new do |opts|
       opts.banner = ""
       available_options = [ 
-                           ['-S', 'host',     'server host'],
-                           ['-U', 'username', 'username'],
-                           ['-P', 'password', 'password'],
-                           ['-d', 'database', 'use database name'],
-                           ['-w', 'columnwidth', 'column width']
+                           ['-c', 'connection', 'use connection defined in ~/.mssql'],
+                           ['-h', 'host',     'server host'],
+                           ['-u', 'username', 'username'],
+                           ['-p', 'password', 'password'],
+                           ['-d', 'database', 'use database name']
                           ]
       available_options.each do |o|
         opts.on(o[0], "--#{o[1]} #{o[1].upcase}", o[2]) do |value|
           @options[o[1]] = value
         end
-      end
-      opts.on("-n", "--no-numbering", "remove numbering") do
-        
       end
       opts.on_tail("-?", "--help", "show syntax summary") do
         print_usage
