@@ -17,4 +17,4 @@ require 'controller'
 require 'query_output'
 require 'command_parser'
 
-STDOUT.sync = false#true
+STDOUT.sync = true
