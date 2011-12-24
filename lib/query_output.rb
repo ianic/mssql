@@ -40,7 +40,11 @@ class QueryOutput
         print TableOutput.new(results.columns[index], results.rows[index]).to_s
       end
     else
-      print TableOutput.new(results.columns, results.rows).to_s
+      if results.columns.size > 0
+        print TableOutput.new(results.columns, results.rows).to_s
+      else
+        print "#{results.affected} rows affected\n"
+      end
     end
   end
 

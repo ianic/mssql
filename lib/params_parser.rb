@@ -10,10 +10,12 @@ class ParamsParser
       opts.banner = ""
       available_options = [ 
                            ['-c', 'connection', 'use connection defined in ~/.mssql'],
-                           ['-h', 'host',     'server host'],
-                           ['-u', 'username', 'username'],
-                           ['-p', 'password', 'password'],
-                           ['-d', 'database', 'use database name']
+                           ['-h', 'host',       'server host'],
+                           ['-u', 'username',   'username'],
+                           ['-p', 'password',   'password'],
+                           ['-d', 'database',   'use database name'],
+                           ['-i', 'input_file', 'input file name'],
+                           ['-q', 'query',      'run query and exit']
                           ]
       available_options.each do |o|
         opts.on(o[0], "--#{o[1]} #{o[1].upcase}", o[2]) do |value|

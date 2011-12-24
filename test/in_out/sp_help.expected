@@ -1,0 +1,74 @@
+
++---------+-------+------------+---------------------------+
+| Name    | Owner | Type       | Created_datetime          |
++---------+-------+------------+---------------------------+
+| authors | dbo   | user table | 2009-12-12 17:32:23 +0100 |
++---------+-------+------------+---------------------------+
+1 rows affected
+
++-------------+---------+----------+--------+-------+-------+----------+--------------------+----------------------+----------------+
+| Column_name | Type    | Computed | Length | Prec  | Scale | Nullable | TrimTrailingBlanks | FixedLenNullInSource | Collation      |
++-------------+---------+----------+--------+-------+-------+----------+--------------------+----------------------+----------------+
+| au_id       | id      | no       | 11     |       |       | no       | no                 | no                   | Croatian_CI_AS |
+| au_lname    | varchar | no       | 40     |       |       | no       | no                 | no                   | Croatian_CI_AS |
+| au_fname    | varchar | no       | 20     |       |       | no       | no                 | no                   | Croatian_CI_AS |
+| phone       | char    | no       | 12     |       |       | no       | no                 | no                   | Croatian_CI_AS |
+| address     | varchar | no       | 40     |       |       | yes      | no                 | yes                  | Croatian_CI_AS |
+| city        | varchar | no       | 20     |       |       | yes      | no                 | yes                  | Croatian_CI_AS |
+| state       | char    | no       | 2      |       |       | yes      | no                 | yes                  | Croatian_CI_AS |
+| zip         | char    | no       | 5      |       |       | yes      | no                 | yes                  | Croatian_CI_AS |
+| contract    | bit     | no       | 1      |       |       | no       | (n/a)              | (n/a)                |                |
++-------------+---------+----------+--------+-------+-------+----------+--------------------+----------------------+----------------+
+9 rows affected
+
++-----------------------------+------+-----------+---------------------+
+| Identity                    | Seed | Increment | Not For Replication |
++-----------------------------+------+-----------+---------------------+
+| No identity column defined. |      |           |                     |
++-----------------------------+------+-----------+---------------------+
+1 rows affected
+
++-------------------------------+
+| RowGuidCol                    |
++-------------------------------+
+| No rowguidcol column defined. |
++-------------------------------+
+1 rows affected
+
++---------------------------+
+| Data_located_on_filegroup |
++---------------------------+
+| PRIMARY                   |
++---------------------------+
+1 rows affected
+
++---------------+---------------------------------------------------+--------------------+
+| index_name    | index_description                                 | index_keys         |
++---------------+---------------------------------------------------+--------------------+
+| aunmind       | nonclustered located on PRIMARY                   | au_lname, au_fname |
+| UPKCL_auidind | clustered, unique, primary key located on PRIMARY | au_id              |
++---------------+---------------------------------------------------+--------------------+
+2 rows affected
+
++-------------------------+------------------------------+---------------+---------------+----------------+------------------------+------------------------------------------------------------------+
+| constraint_type         | constraint_name              | delete_action | update_action | status_enabled | status_for_replication | constraint_keys                                                  |
++-------------------------+------------------------------+---------------+---------------+----------------+------------------------+------------------------------------------------------------------+
+| CHECK on column au_id   | CK__authors__au_id__7D78A4E7 | (n/a)         | (n/a)         | Enabled        | Is_For_Replication     | ([au_id] like '[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]') |
+| CHECK on column zip     | CK__authors__zip__7F60ED59   | (n/a)         | (n/a)         | Enabled        | Is_For_Replication     | ([zip] like '[0-9][0-9][0-9][0-9][0-9]')                         |
+| DEFAULT on column phone | DF__authors__phone__7E6CC920 | (n/a)         | (n/a)         | (n/a)          | (n/a)                  | ('UNKNOWN')                                                      |
+| PRIMARY KEY (clustered) | UPKCL_auidind                | (n/a)         | (n/a)         | (n/a)          | (n/a)                  | au_id                                                            |
++-------------------------+------------------------------+---------------+---------------+----------------+------------------------+------------------------------------------------------------------+
+4 rows affected
+
++------------------------------------------------------+
+| Table is referenced by foreign key                   |
++------------------------------------------------------+
+| pubs.dbo.titleauthor: FK__titleauth__au_id__0AD2A005 |
++------------------------------------------------------+
+1 rows affected
+
++------------------------------+
+| Table is referenced by views |
++------------------------------+
++------------------------------+
+0 rows affected

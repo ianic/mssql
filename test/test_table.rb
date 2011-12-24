@@ -1,7 +1,8 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*
+$: << File.join(File.dirname(__FILE__))
 require 'test_helper'
 
-class TestTable < Test::Unit::TestCase 
+class TestTable < MiniTest::Unit::TestCase 
   
   def test_one_table
     to = TableOutput.new([:id, :pero, :zdero], [[1, 'abc', 123], [10, 'defg', 'nesto']])
@@ -12,6 +13,7 @@ class TestTable < Test::Unit::TestCase
 | 1  | abc  | 123   |
 | 10 | defg | nesto |
 +----+------+-------+
+2 rows affected
 "
     assert_equal output, to.to_s
   end

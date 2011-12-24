@@ -1,15 +1,11 @@
 require 'test/unit'
+require 'minitest/unit'
 require 'pp'   
-
-# require 'rubygems'
-# require "bundler/setup" 
-# require 'tiny_tds'
-# require 'hashie'
 
 $: << File.join(File.dirname(__FILE__), "../lib")
 require 'mssql'
 
-class Test::Unit::TestCase                                         
+class MiniTest::Unit::TestCase                                         
   
   def load_fixture(file_name)
     YAML.load(File.open("test/fixtures/#{file_name}.yml")) 

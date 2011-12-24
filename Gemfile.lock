@@ -2,16 +2,26 @@ GEM
   remote: http://rubygems.org/
   remote: http://gems.minus5.hr/
   specs:
+    ZenTest (4.6.2)
     activesupport (3.1.1)
       multi_json (~> 1.0)
+    autotest-fsevent (0.2.5)
+      sys-uname
+    autotest-growl (0.2.14)
     hashie (1.0.0)
+    minitest (2.7.0)
     multi_json (1.0.3)
+    sys-uname (0.8.6)
     tiny_tds (0.5.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  ZenTest
   activesupport (= 3.1.1)
+  autotest-fsevent
+  autotest-growl
   hashie (= 1.0.0)
+  minitest (>= 2.7.0)
   tiny_tds (= 0.5.0)

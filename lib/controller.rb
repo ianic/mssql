@@ -4,11 +4,22 @@ class Controller
   
   def initialize
     connect
-    # @prompt = "#{@connection.name}> "
     trap_int
   end
 
   def run
+    if @options.input_file
+      show File.read(@options.input_file)
+    elsif @options.query
+      show @options.query
+    else
+      run_loop
+    end
+  end
+
+  private
+
+  def run_loop
     loop do
       lines = []
       while line = Readline.readline(@prompt, true)
@@ -30,8 +41,6 @@ class Controller
       end
     end
   end
-
-  private
 
   def trap_int
     #stty_save = `stty -g`.chomp
@@ -55,8 +64,9 @@ class Controller
 
   def read_configs
     file_configs = YAML.load_file "#{ENV['HOME']}/.mssql" rescue {}
-    @configs = Hashie::Mash.new(file_configs)
+    @configs = Hashie::Mash.new(file_configs)    
     params = ParamsParser.new
+    @options = params.options
     unless params.options.empty?      
       if params.options.connection
         key = params.options.connection.to_s

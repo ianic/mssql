@@ -1,6 +1,7 @@
+$: << File.join(File.dirname(__FILE__))
 require 'test_helper'
 
-class TestCommandParser < Test::Unit::TestCase
+class TestCommandParser < MiniTest::Unit::TestCase
 
   def test_find
     cp = CommandParser.new(' .find    nesto')

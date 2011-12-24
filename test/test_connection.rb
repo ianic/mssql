@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestConnection < Test::Unit::TestCase 
+class TestConnection < MiniTest::Unit::TestCase 
   
   def setup         
     @authors_first_row = ["172-32-1176",

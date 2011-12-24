@@ -1,4 +1,5 @@
 require 'optparse'
+require 'pp'
 
 require 'rubygems'
 require "bundler/setup" 
@@ -15,3 +16,5 @@ require 'command'
 require 'controller'
 require 'query_output'
 require 'command_parser'
+
+STDOUT.sync = false#true
