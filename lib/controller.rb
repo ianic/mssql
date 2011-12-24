@@ -35,27 +35,8 @@ class Controller
     loop do
       lines = []
       while line = Readline.readline(@prompt, true)
-        handle_line(line)
-
-        print line
-        print "\n"
-        break
-
-        next if line.empty?
-        if lines.empty?
-          command = Command.new(line, @connection)
-          return if command.exit?
-          break  if command.processed?
-        end 
-        if Command.go?(line)
-          show lines.join("\n")
-          break
-        end
-        lines << line
-      end                  
-      if $stdin.eof?
-        show lines.join("\n")
-        return
+        ret = handle_line(line)
+        return if ret && ret < 0
       end
     end
   end
