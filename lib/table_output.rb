@@ -9,18 +9,16 @@ class TableOutput
 
   def calc_sizes
     @sizes = []
+    @align = []
     @cols.each_with_index do |col, index|
       @sizes[index] = col.to_s.length
+      @align[index] = '-'
+
     end
     @rows.each do |row|
-      data_row = []
-      row.each_with_index do |value, index|
-        # TODO - fix for binary data (timestams)
-        if value.class == String && value.encoding.to_s == "ASCII-8BIT"
-          value = "***"
-          row[index] = value
-        end
-        size = value.to_s.length
+      row.each_with_index do |value, index|        
+        row[index] = value = format_value(value, index)
+        size = value.length
         if @sizes[index] < size
           @sizes[index] = size
         end
@@ -28,8 +26,31 @@ class TableOutput
     end
   end
 
+  #FIXME - hard coded formating for floats and times
+  def format_value(value, index)
+    if value.class == String && value.encoding.to_s == "ASCII-8BIT" #timestamps and binary data
+      a =  value.unpack("C" * value.size)
+      value = "%x"*a.size % a
+    elsif value.class == Float || value.class == BigDecimal
+      value = "%.4f" % [value]
+      @align[index] = "+"
+    elsif value.class == BigDecimal
+      value = value.to_s('F')
+      @align[index] = "+"
+    elsif value.class == Fixnum 
+      @align[index] = "+"
+    elsif value.class == Time
+      value = value.
+        strftime("%F %T").
+        gsub(" 00:00:00", "")
+      @align[index] = "+"
+    end    
+    #print "#{@cols[index]}\t#{value.class}\t#{value.to_s}\n"
+    value.to_s
+  end
+
   def to_s
-    format = @sizes.map{|s| " %-#{s}s "}.join("|")
+    format = @sizes.each_with_index.map{|s, i| " %#{@align[i]}#{s}s "}.join("|")
     output = []
 
     separator = @sizes.map{|s| "-" * (s+2)}.join("+")

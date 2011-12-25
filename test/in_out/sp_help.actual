@@ -1,23 +1,23 @@
 
-+---------+-------+------------+---------------------------+
-| Name    | Owner | Type       | Created_datetime          |
-+---------+-------+------------+---------------------------+
-| authors | dbo   | user table | 2009-12-12 17:32:23 +0100 |
-+---------+-------+------------+---------------------------+
++---------+-------+------------+---------------------+
+| Name    | Owner | Type       |    Created_datetime |
++---------+-------+------------+---------------------+
+| authors | dbo   | user table | 2009-12-12 17:32:23 |
++---------+-------+------------+---------------------+
 1 rows affected
 
 +-------------+---------+----------+--------+-------+-------+----------+--------------------+----------------------+----------------+
 | Column_name | Type    | Computed | Length | Prec  | Scale | Nullable | TrimTrailingBlanks | FixedLenNullInSource | Collation      |
 +-------------+---------+----------+--------+-------+-------+----------+--------------------+----------------------+----------------+
-| au_id       | id      | no       | 11     |       |       | no       | no                 | no                   | Croatian_CI_AS |
-| au_lname    | varchar | no       | 40     |       |       | no       | no                 | no                   | Croatian_CI_AS |
-| au_fname    | varchar | no       | 20     |       |       | no       | no                 | no                   | Croatian_CI_AS |
-| phone       | char    | no       | 12     |       |       | no       | no                 | no                   | Croatian_CI_AS |
-| address     | varchar | no       | 40     |       |       | yes      | no                 | yes                  | Croatian_CI_AS |
-| city        | varchar | no       | 20     |       |       | yes      | no                 | yes                  | Croatian_CI_AS |
-| state       | char    | no       | 2      |       |       | yes      | no                 | yes                  | Croatian_CI_AS |
-| zip         | char    | no       | 5      |       |       | yes      | no                 | yes                  | Croatian_CI_AS |
-| contract    | bit     | no       | 1      |       |       | no       | (n/a)              | (n/a)                |                |
+| au_id       | id      | no       |     11 |       |       | no       | no                 | no                   | Croatian_CI_AS |
+| au_lname    | varchar | no       |     40 |       |       | no       | no                 | no                   | Croatian_CI_AS |
+| au_fname    | varchar | no       |     20 |       |       | no       | no                 | no                   | Croatian_CI_AS |
+| phone       | char    | no       |     12 |       |       | no       | no                 | no                   | Croatian_CI_AS |
+| address     | varchar | no       |     40 |       |       | yes      | no                 | yes                  | Croatian_CI_AS |
+| city        | varchar | no       |     20 |       |       | yes      | no                 | yes                  | Croatian_CI_AS |
+| state       | char    | no       |      2 |       |       | yes      | no                 | yes                  | Croatian_CI_AS |
+| zip         | char    | no       |      5 |       |       | yes      | no                 | yes                  | Croatian_CI_AS |
+| contract    | bit     | no       |      1 |       |       | no       | (n/a)              | (n/a)                |                |
 +-------------+---------+----------+--------+-------+-------+----------+--------------------+----------------------+----------------+
 9 rows affected
 

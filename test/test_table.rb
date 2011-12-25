@@ -10,7 +10,7 @@ class TestTable < MiniTest::Unit::TestCase
 +----+------+-------+
 | id | pero | zdero |
 +----+------+-------+
-| 1  | abc  | 123   |
+|  1 | abc  |   123 |
 | 10 | defg | nesto |
 +----+------+-------+
 2 rows affected
