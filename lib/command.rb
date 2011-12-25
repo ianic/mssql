@@ -4,7 +4,6 @@ class Command
     @connection = connection
     @command = command.strip.downcase
     @processed = false
-    parse
   end
   
   attr_reader :processed
@@ -13,12 +12,17 @@ class Command
     command.strip.downcase == "go"
   end
 
+  def go?
+    @command == "go" || @command.start_with?(".use")
+  end
+
   def exit?
     @command == ".exit" || @command == ".quit"
   end
   
-  def processed?
-    @processed
+  def exec
+    parse
+    @processed || go? || exit?
   end
 
   def parse    

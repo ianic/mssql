@@ -22,41 +22,52 @@ class Controller
 
   private
 
-  def emacs_run_loop
+  def emacs_run_loop    
     print @prompt
+    $stdin.flush
     $stdin.each_line do |line|
-      ret = handle_line line
-      break if ret && ret < 0
-      print @prompt
+      #print "emacs_run_loop #{line}"
+      ret = handle_line(line)      
+      print @prompt unless has_more?
+      $stdout.fsync
+      break if ret && ret < 0      
     end
+  end
+
+  def has_more?
+    c = $stdin.read_nonblock(1) rescue nil
+    $stdin.ungetbyte(c) if c
+    !!c
   end
 
   def run_loop
     loop do
-      lines = []
       while line = Readline.readline(@prompt, true)
         ret = handle_line(line)
         return if ret && ret < 0
       end
+      exec_lines
     end
   end
 
   def handle_line(line)
+    line = line.strip
     return if line.empty?
-    if @lines.empty?
-      command = Command.new(line, @connection)
-      return -1 if command.exit?
-      return if command.processed?
-    end 
-    if Command.go?(line)
+    command = Command.new(line, @connection)
+    if command.exit?
       exec_lines
-      return
+      return -1 
+    end      
+    if command.go?
+      exec_lines
     end
+    return 0 if command.exec
     @lines << line    
-    if $stdin.eof?
-      exec_lines 
-      return -1
-    end    
+    # if $stdin.eof?
+    #   exec_lines 
+    #   return -1
+    # end
+    0
   end
 
   def exec_lines
