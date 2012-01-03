@@ -1,6 +1,12 @@
+PATH
+  remote: .
+  specs:
+    mssql (0.0.1)
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.minus5.hr/
+  remote: https://rubygems.org/
   specs:
     ZenTest (4.6.2)
     activesupport (3.1.1)
@@ -24,4 +30,5 @@ DEPENDENCIES
   autotest-growl
   hashie (= 1.0.0)
   minitest (>= 2.7.0)
+  mssql!
   tiny_tds (= 0.5.0)
