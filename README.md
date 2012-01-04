@@ -2,19 +2,43 @@
 
 Command line tool for connecting to Microsoft Sql Server from Mac or Linux.
 
-Based on [tiny_tds](https://github.com/rails-sqlserver/tiny_tds) and [freetds](http://www.freetds.org/)
-
 ## Installation
 
     gem install mssql
 
 ## Usage
+
+  Usage: mssql <options>
+  
+    -c, --connection CONNECTION      use connection defined in ~/.mssql
+    -h, --host HOST                  server host
+    -u, --username USERNAME          username
+    -p, --password PASSWORD          password
+    -d, --database DATABASE          use database name
+    -i, --input_file INPUT_FILE      input file name
+    -q, --query QUERY                run query and exit
+    -?, --help                       show syntax summary
+
 Connect to database:
 
-    $ mssql.rb -h host -u user -p password -d database
+    $ mssql -h host -u user -p password -d database
+
+Use connection from config file (~/.mssql):
+
+    $ mssql -c alfa
+    
+Execute query and exit:
+
+    $ mssql -c alfa -q "select * from authors"
 
 
-In the following examples I will use pubs database which is often installed by Sql Server
+### Commands
+
+  Commands are prefixed with dot. Currently recognized commands are:
+  
+  * .find
+  * .explain 
+  * .exit
 
 #### query
 
@@ -93,7 +117,7 @@ In the following examples I will use pubs database which is often installed by S
   
 #### .explain 
 
-  .expalin for procedures/functions/views return sql body, for tables executes sp_help [table name]
+  .explain for procedures/functions/views returns sql body, for tables executes sp_help [table name]
 
     iow> .explain reptq1
     CREATE PROCEDURE reptq1 AS
@@ -109,7 +133,7 @@ In the following examples I will use pubs database which is often installed by S
 
   Use it to close mssql.
 
-## ~/.mssql
+## Configuration file ~/.mssql
 
  Mssql tries to read ~/.mssql config file on start up. 
  Config file is in yaml format.
@@ -117,11 +141,13 @@ In the following examples I will use pubs database which is often installed by S
  Example config file:
  
     alfa: &alfa
+      name: alfa
       host: alfa_host
       username: my_username
       password: my_password
       database: pubs
     beta: 
+      name: beta
       host: beta_host
       username: domain\domain_user
       password: password
@@ -130,19 +156,18 @@ In the following examples I will use pubs database which is often installed by S
     default_connection:
        <<: *alfa
      
-  With config file you can start mssql.rb using -c argument to specify connection:
+  With config file you can start mssql using -c argument to specify connection:
   
-    mssql.rb -c alfa
+    mssql -c alfa
     
-  If default connnection exists it will used if no arguments specified:
+  If default connection exists it will used if no arguments specified:
   
-    massql.rb
+    mssql
     alfa> _
     
-
 ## Emacs usage
  
-  I build this for use with Emacs sql-mode. Add /emacs/sql_ms.el to your init.el:
+  I build this for use with Emacs sql-mode. Add ./emacs/sql_ms.el to your init.el:
   
     (add-to-list 'load-path "~/Work/mssql/emacs/")
     (require 'sql-ms)
@@ -154,3 +179,12 @@ In the following examples I will use pubs database which is often installed by S
   
   * Ctrl-c c - sends region from queries to SQL buffer
   * Ctrl-c b - sends whole buffer
+  * Ctrl-c Ctrl-l a - list database objects in new buffer
+  * Ctrl-c Ctrl-l t - .explain in new buffer
+
+## Thanks
+
+  * Ken Collins for creating [tiny_tds](https://github.com/rails-sqlserver/tiny_tds)
+  * All the kind people who are contributing to [freetds](http://www.freetds.org/)
+  * Michael Mauger and others for developing [sql.el](http://git.savannah.gnu.org/cgit/emacs.git/tree/lisp/progmodes/sql.el)
+  

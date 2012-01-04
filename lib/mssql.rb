@@ -1,5 +1,6 @@
 require 'optparse'
 require 'pp'
+require 'yaml'
 
 require 'rubygems'
 #require "bundler/setup" 

@@ -96,7 +96,7 @@ class Controller
   end
 
   def read_configs
-    file_configs = YAML.load_file "#{ENV['HOME']}/.mssql" rescue {}
+    file_configs = YAML.load(File.read("#{ENV['HOME']}/.mssql")) rescue {}
     @configs = Hashie::Mash.new(file_configs)    
     params = ParamsParser.new
     @options = params.options
