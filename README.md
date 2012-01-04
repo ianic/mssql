@@ -6,6 +6,17 @@ Command line tool for connecting to Microsoft Sql Server from Mac or Linux.
 
     gem install mssql
 
+It depends on freetds. So it should be installed. 
+
+On Mac:
+    
+    brew install freetds
+
+On Ubuntu Linux:
+
+    sudo apt-get install freetds-dev 
+    
+
 ## Usage
 
   Usage: mssql <options>
