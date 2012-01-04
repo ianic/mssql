@@ -187,4 +187,4 @@ Execute query and exit:
   * Ken Collins for creating [tiny_tds](https://github.com/rails-sqlserver/tiny_tds)
   * All the kind people who are contributing to [freetds](http://www.freetds.org/)
   * Michael Mauger and others for developing [sql.el](http://git.savannah.gnu.org/cgit/emacs.git/tree/lisp/progmodes/sql.el)
-  
+
