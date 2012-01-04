@@ -3,12 +3,11 @@ source :rubygems
 # Specify your gem's dependencies in mssql.gemspec
 gemspec
 
-# gem "tiny_tds", "0.5.0"
-# gem "hashie", "1.0.0"
-# gem "activesupport", "3.1.1" 
-# gem "ZenTest"
+group :development do
+  gem "tiny_tds", "0.5.0"
+  gem "hashie", "1.0.0"
+  gem "activesupport", "3.1.1" 
 
-group :test do
   gem 'minitest', '>=2.7.0'
   gem 'ZenTest'
   gem 'autotest-growl'
