@@ -141,5 +141,16 @@ In the following examples I will use pubs database which is often installed by S
     
 
 ## Emacs usage
-
  
+  I build this for use with Emacs sql-mode. Add /emacs/sql_ms.el to your init.el:
+  
+    (add-to-list 'load-path "~/Work/mssql/emacs/")
+    (require 'sql-ms)
+
+  Create ~/.mssql file with connections you want to use. 
+  In Emacs press F12 or M-x enter-db-mode to open two buffers: \*queries\* and \*SQL\*. Write your queries in queries buffer and watch results in SQL buffer.
+  
+  Keybindings:
+  
+  * Ctrl-c c - sends region from queries to SQL buffer
+  * Ctrl-c b - sends whole buffer

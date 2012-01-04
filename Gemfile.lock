@@ -2,21 +2,22 @@ PATH
   remote: .
   specs:
     mssql (0.0.1)
+      activesupport (~> 3.1.1)
+      hashie (~> 1.0.0)
+      tiny_tds (~> 0.5.0)
 
 GEM
   remote: http://rubygems.org/
-  remote: http://gems.minus5.hr/
-  remote: https://rubygems.org/
   specs:
     ZenTest (4.6.2)
-    activesupport (3.1.1)
+    activesupport (3.1.3)
       multi_json (~> 1.0)
     autotest-fsevent (0.2.5)
       sys-uname
     autotest-growl (0.2.14)
     hashie (1.0.0)
     minitest (2.7.0)
-    multi_json (1.0.3)
+    multi_json (1.0.4)
     sys-uname (0.8.6)
     tiny_tds (0.5.0)
 
@@ -25,10 +26,7 @@ PLATFORMS
 
 DEPENDENCIES
   ZenTest
-  activesupport (= 3.1.1)
   autotest-fsevent
   autotest-growl
-  hashie (= 1.0.0)
   minitest (>= 2.7.0)
   mssql!
-  tiny_tds (= 0.5.0)

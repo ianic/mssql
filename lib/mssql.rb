@@ -2,7 +2,8 @@ require 'optparse'
 require 'pp'
 
 require 'rubygems'
-require "bundler/setup" 
+#require "bundler/setup" 
+
 require 'tiny_tds'
 require 'hashie'
 require 'active_support/core_ext/hash/keys.rb'

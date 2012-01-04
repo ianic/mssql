@@ -8,10 +8,10 @@ gemspec
 # gem "activesupport", "3.1.1" 
 # gem "ZenTest"
 
-# group :test do
-#   gem 'minitest', '>=2.7.0'
-#   gem 'ZenTest'
-#   gem 'autotest-growl'
-#   gem 'autotest-fsevent'
-# end
+group :test do
+  gem 'minitest', '>=2.7.0'
+  gem 'ZenTest'
+  gem 'autotest-growl'
+  gem 'autotest-fsevent'
+end
 
